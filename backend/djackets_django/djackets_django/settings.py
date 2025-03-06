@@ -53,22 +53,43 @@ INSTALLED_APPS = [
 
 
 # This allows the frontend to make requests to the backend
-CORS_ALLOWED_ORIGINS = [
+""" CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Example for frontend development
     # Add other origins here as needed
+] """
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',  # Your frontend URL (change if needed)
 ]
+
+""" REST_FRAMEWORK = {
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+   ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser'
+   ),
+} """
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    # Other DRF settings...
+      
 }
 
+
+# CSRF configuration
+
+CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
+CSRF_COOKIE_NAME = "csrftoken"  # Default name, but confirm if it's correct
+CSRF_COOKIE_HTTPONLY = False  # CSRF cookie should not be HTTP-only to allow JS access
+CSRF_COOKIE_SECURE = False  # Set to True if you're using HTTPS (make sure frontend uses HTTPS too)
+CSRF_COOKIE_SAMESITE = "Lax"  # Set to 'None' if you are doing cross-origin requests
 
 
 
